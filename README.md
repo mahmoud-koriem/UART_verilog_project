@@ -69,4 +69,3 @@ uart #(
     .o_Rx_Byte(rx_byte_in)
 );
 
-This README was generated for the Verilog UART project by Mahmoud Ahmed Koriem.

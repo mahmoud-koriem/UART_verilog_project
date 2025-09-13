@@ -1,6 +1,7 @@
 # UART_verilog_project
 A simple UART transmitter and receiver implemented in Verilog
-Author: MAHMOUD AHMED KORIEM
+Author: 
+MAHMOUD AHMED KORIEM
 Date: September 13, 2025
 
 1. About The Project

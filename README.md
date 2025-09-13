@@ -1,49 +1,59 @@
-# UART_verilog_project
-A simple UART transmitter and receiver implemented in Verilog
-Author: 
-MAHMOUD AHMED KORIEM
+Verilog UART Implementation
+A robust and parameterizable UART (Universal Asynchronous Receiver-Transmitter) module implemented in Verilog, designed for easy integration into any FPGA project.
+
+Author: MAHMOUD AHMED KORIEM
 Date: September 13, 2025
-
 1. About The Project
-This project is a complete implementation of a Universal Asynchronous Receiver-Transmitter (UART) module in the Verilog HDL. The design is intended to be simple, parameterizable, and easily portable to any FPGA platform.
+This project provides a complete Verilog implementation of a UART, a fundamental component for serial communication. The design is lightweight, fully synthesizable, and intended for easy portability across different FPGA platforms.
 
-The UART protocol is a standard for serial communication, allowing for the transmission of data between two devices one bit at a time. This implementation includes:
+The implementation handles the serialization of parallel data for transmission and the de-serialization of incoming serial data for reception, complete with start, stop, and data bits.
 
-A Transmitter (TX) to serialize parallel data.
+Key Features
+Parameterizable: Easily configure the system clock frequency and baud rate.
 
-A Receiver (RX) to de-serialize incoming serial data.
+Standard Compliant: Follows the standard UART protocol (8-N-1 format: 8 data bits, no parity, 1 stop bit).
 
-A top-level wrapper for easy integration.
+Modular Design: Separate, clean modules for the transmitter (uart_tx) and receiver (uart_rx).
 
-A self-checking testbench to verify functionality.
+Self-Checking Testbench: Includes a comprehensive testbench to verify correct functionality in a loopback configuration.
 
-2. File Structure
-The repository contains the following Verilog source files:
+2. Repository Contents
+File
 
-uart_tx.v: The UART transmitter module. It takes an 8-bit parallel byte and transmits it serially, adding the necessary start and stop bits.
+Description
 
-uart_rx.v: The UART receiver module. It samples the incoming serial line, detects the start bit, reads the data bits, and outputs the 8-bit parallel byte.
+uart_tx.v
 
-uart.v: The top-level UART module that instantiates and connects the transmitter and receiver. This file provides a clean interface for the user's design.
+The transmitter module. Serializes and transmits an 8-bit data byte.
 
-uart_tb.v: A testbench designed to simulate and verify the functionality of the top-level uart module in a loopback configuration.
+uart_rx.v
 
-3. How to Use
+The receiver module. Receives and de-serializes an incoming data stream into an 8-bit byte.
+
+uart.v
+
+The top-level wrapper that integrates the TX and RX modules into a single, user-friendly interface.
+
+uart_tb.v
+
+A simulation testbench to validate the entire UART module.
+
+3. Getting Started
 Simulation
-To verify the design, you can run a simulation using any standard Verilog simulator (like ModelSim, Vivado Simulator, Icarus Verilog, etc.).
+You can verify the design's functionality using any standard Verilog simulator (e.g., ModelSim, Vivado Simulator, Icarus Verilog).
 
-Compile all the Verilog files (uart.v, uart_tx.v, uart_rx.v, uart_tb.v).
+Add all Verilog source files (.v) to your simulation project.
 
-Set uart_tb as the top-level simulation module.
+Set uart_tb as the top-level module for the simulation.
 
-Run the simulation. The testbench will automatically send a byte of data ('A') and then a second byte ('Z'), and it will report in the console whether the received byte matches the transmitted one.
+Run the simulation. The testbench will output success or failure messages to the console.
 
 Integration
-To integrate the UART into your own project:
+To use the UART in your own hardware design:
 
-Instantiate the uart module from uart.v.
+Instantiate the top-level uart module in your project.
 
-Configure the CLK_FREQ and BAUD_RATE parameters to match your system's clock frequency and desired communication speed.
+Set the CLK_FREQ and BAUD_RATE parameters to match your system's requirements.
 
 Example Instantiation:
 
@@ -54,21 +64,33 @@ uart #(
     .i_Clk(my_system_clock),
     .i_Rx(uart_rx_pin),
     .o_Tx(uart_tx_pin),
-    // Connect other ports to your logic
-    // ...
+    
+    // Connect data signals to your application logic
+    .i_Tx_DV(tx_data_valid),
+    .i_Tx_Byte(tx_byte_out),
+    .o_Rx_DV(rx_data_valid),
+    .o_Rx_Byte(rx_byte_in)
 );
 
-4. Module Parameters
-The top-level uart.v module can be configured with the following parameters:
+4. Configuration
+The module's behavior is controlled by two top-level parameters.
 
-CLK_FREQ: The frequency of the input system clock (i_Clk) in Hertz.
+Parameter
 
-Default: 50_000_000 (50 MHz)
+Description
 
-BAUD_RATE: The desired communication speed in bits per second.
+Default Value
 
-Default: 9600
+CLK_FREQ
 
-The module automatically calculates the required clock-per-bit value to achieve the specified baud rate.
+The frequency of the input system clock in Hertz.
+
+50_000_000 (50MHz)
+
+BAUD_RATE
+
+The desired serial communication speed in bits/sec.
+
+9600
 
 This README was generated for the Verilog UART project by Mahmoud Ahmed Koriem.

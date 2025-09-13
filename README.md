@@ -18,20 +18,10 @@ The implementation handles the serialization of parallel data for transmission a
     └── uart_tb.v
 
 Folder/File
-
 Description
+scrs/Contains all the synthesizable source code for the UART module.
 
-scrs/
-
-Contains all the synthesizable source code for the UART module.
-
-tb/
-
-Contains the simulation testbench used to verify the design.
-
-README.md
-
-This project overview file.
+tb/Contains the simulation testbench used to verify the design.
 
 3. Getting Started
 Simulation
